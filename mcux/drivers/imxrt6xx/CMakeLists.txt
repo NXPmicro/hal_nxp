@@ -16,3 +16,13 @@ zephyr_sources_ifdef(CONFIG_SPI_MCUX_FLEXCOMM   fsl_spi.c fsl_flexcomm.c)
 zephyr_sources_ifdef(CONFIG_I2C_MCUX_FLEXCOMM   fsl_i2c.c fsl_flexcomm.c)
 zephyr_sources_ifdef(CONFIG_UART_MCUX_FLEXCOMM	fsl_usart.c fsl_flexcomm.c)
 zephyr_sources_ifdef(CONFIG_GPIO_MCUX_LPC     fsl_gpio.c fsl_pint.c fsl_inputmux.c)
+
+zephyr_library_sources_ifdef(CONFIG_CMSIS_DSP_POWERQUAD
+  fsl_powerquad_basic.c
+  fsl_powerquad_cmsis.c
+  fsl_powerquad_data.c
+  fsl_powerquad_filter.c
+  fsl_powerquad_math.c
+  fsl_powerquad_matrix.c
+  fsl_powerquad_transform.c
+  )
