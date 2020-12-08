@@ -7,3 +7,9 @@ if(CONFIG_ETH_MCUX)
 endif()
 
 zephyr_library_sources_ifdef(CONFIG_ETH_MCUX phyksz8081/fsl_phy.c)
+
+if(CONFIG_PM)
+  zephyr_include_directories(pca9420)
+endif()
+
+zephyr_library_sources_ifdef(CONFIG_PM pca9420/fsl_pca9420.c)
