@@ -6,3 +6,5 @@
 
 zephyr_include_directories(.)
 zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_EHCI  usb_phy.c)
+zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_LPCIP3511HS  usb_phy.c)
+zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_LPCIP3511HS  usb_phy.c)

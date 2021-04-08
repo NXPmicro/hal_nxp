@@ -21,6 +21,18 @@
     #define USB_DEVICE_CONFIG_EHCI (0U)
 #endif
 
+#ifdef CONFIG_USB_DC_NXP_LPCIP3511FS
+    #define USB_DEVICE_CONFIG_LPCIP3511FS (1U)
+#else
+    #define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
+#endif
+
+#ifdef CONFIG_USB_DC_NXP_LPCIP3511HS
+    #define USB_DEVICE_CONFIG_LPCIP3511HS (1U)
+#else
+    #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
+#endif
+
 /* Macro to define controller handle */
 typedef void *usb_device_handle;
 #define usb_device_controller_handle usb_device_handle
@@ -41,6 +53,9 @@ typedef void *usb_device_handle;
 #define USB_OSA_SR_ALLOC() int usbOsaCurrentSr
 #define USB_OSA_ENTER_CRITICAL() usbOsaCurrentSr = irq_lock()
 #define USB_OSA_EXIT_CRITICAL() irq_unlock(usbOsaCurrentSr)
+#define OSA_SR_ALLOC() int usbOsaCurrentSr
+#define OSA_ENTER_CRITICAL() usbOsaCurrentSr = irq_lock()
+#define OSA_EXIT_CRITICAL() irq_unlock(usbOsaCurrentSr)
 
 /* Control endpoint index */
 #define USB_CONTROL_ENDPOINT (0U)
@@ -49,8 +64,13 @@ typedef void *usb_device_handle;
 #define USB_UNINITIALIZED_VAL_32 (0xFFFFFFFFU)
 
 /* NXP SDK USB controller driver configuration macros */
+#if defined (CONFIG_USB_DEDICATED_MEMORY)
+#define USB_BDT __attribute__((section("m_usb_global, \"aw\", %nobits @")))
+#define USB_GLOBAL __attribute__((section("m_usb_global, \"aw\", %nobits @")))
+#else
 #define USB_BDT
 #define USB_GLOBAL
+#endif
 #define USB_DATA_ALIGN_SIZE 4
 #define USB_RAM_ADDRESS_ALIGNMENT(n) __aligned(n)
 
@@ -58,8 +78,13 @@ typedef void *usb_device_handle;
 #if defined(CONFIG_NOCACHE_MEMORY)
 #define USB_CONTROLLER_DATA __nocache
 #else
-#define USB_CONTROLLER_DATA
+#if defined (CONFIG_USB_DEDICATED_MEMORY)
+  #define USB_CONTROLLER_DATA __attribute__((section("m_usb_global, \"aw\", %nobits @")))
+#else
+  #define USB_CONTROLLER_DATA
 #endif
+#endif 
+
 /* How many the DTD are supported. */
 #define USB_DEVICE_CONFIG_EHCI_MAX_DTD (16U)
 /* Control endpoint maxPacketSize */

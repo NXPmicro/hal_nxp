@@ -7,3 +7,5 @@
 zephyr_include_directories(.)
 zephyr_include_directories(./port/zephyr)
 zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_EHCI  usb_device_ehci.c)
+zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_LPCIP3511FS  usb_device_lpcip3511.c)
+zephyr_library_sources_ifdef(CONFIG_USB_DC_NXP_LPCIP3511HS  usb_device_lpcip3511.c)
